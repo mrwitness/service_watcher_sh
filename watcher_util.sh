@@ -27,7 +27,8 @@ function stop_watcher {
 		return 0
 	fi	
 	proc_id=$1
-	echo trying to stop watcher of pid:$proc_id...
+	now=`date +'%Y-%m-%d %H:%M:%S'`
+	echo trying to stop watcher of pid:$proc_id... $now
 
 	watcher_startd=`is_watcher_started $proc_id`
 	if [[ $watcher_startd == "1" ]]
@@ -37,9 +38,11 @@ function stop_watcher {
 		do
 			kill $PID > /dev/null 2>&1
 		done
-		echo watcher of pid:$proc_id stoped!
+		now=`date +'%Y-%m-%d %H:%M:%S'`
+		echo watcher of pid:$proc_id stoped! $now
 	else
-		echo watcher of pid:$proc_id not started!
+		now=`date +'%Y-%m-%d %H:%M:%S'`
+		echo watcher of pid:$proc_id not started! $now
 	fi
 }
 
@@ -56,13 +59,9 @@ function start_watcher {
 	watcher_started=`is_watcher_started $proc_id`
 	if [[ $watcher_started == "0" ]]
 	then
-		echo watcher of pid:$proc_id not started,start it now..... 
-		if [ $test -eq 1 ]
-		then
-			/bin/bash watcher.sh $proc_id 2>&1 &
-		else
-			/bin/bash watcher.sh $proc_id >>"watcher.log" 2>&1 &
-		fi
+		now=`date +'%Y-%m-%d %H:%M:%S'`
+		echo watcher of pid:$proc_id not started,start it now... $now
+		/bin/bash watcher.sh $proc_id >>"log_watcher.log" 2>&1 &
 	else
 		echo watcher already started!
 	fi

@@ -1,4 +1,10 @@
 #!/bin/bash
 
-echo restart.sh called,but now it is only a demo,so we do nothing.
+TEST=1
+if [ $TEST -eq 1 ];then
+	echo restart.sh called!
+fi
+
+/bin/bash stop_all.sh
+/bin/bash start_all.sh
 

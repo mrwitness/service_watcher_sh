@@ -45,10 +45,10 @@ do
 	then
 		now=`date +'%Y-%m-%d %H:%M:%S'`
 		echo service not started,restart it now! $now
-		/bin/bash $RESTART_FILE
 		now=`date +'%Y-%m-%d %H:%M:%S'`
 		echo watcher of pid:$proc_id is shutted down! $now
-		exit 2
+		break
 	fi
 	sleep $SLEEP_INTERVAL
 done
+/bin/bash $RESTART_FILE

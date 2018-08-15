@@ -1,7 +1,6 @@
 #!/bin/bash
-# service utilitys,when you use it in PRODUCTION,you must custom @is_service_alive,@is_service_started,@get_service_pid
+# a demo service_util implement.
 
-test=0
 function is_service_alive {
 	is_service_started
 }
@@ -15,7 +14,36 @@ function is_service_started {
 	fi
 }
 
-#is_service_started
-#is_service_alive
 
+function get_service_pid {
+	# only test in MAC
+        PIDS=`ps aux|grep dummy_echo|grep -v grep|awk '{print $2}'`
+        PIDS=${PIDS[*]%%/*}
+	
+	if [ "$PIDS" = "" ]
+	then
+		echo 0
+	else
+	        for pid in $PIDS
+	        do
+        	        echo $pid
+	                break
+	        done
+	fi
+}
+
+function get_service_pid_till_success {
+        pid=`get_service_pid`
+        while true
+        do
+                if [ "$pid" -gt 0  ] 2>/dev/null;
+                then
+                        break
+                else
+                        sleep 1
+                        pid=`get_service_pid`
+                fi
+        done
+        echo $pid
+}
 
